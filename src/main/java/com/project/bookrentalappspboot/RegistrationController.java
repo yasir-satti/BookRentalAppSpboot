@@ -11,7 +11,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://d2s5kr8fysj3pd.cloudfront.net")
 @RequestMapping("api/registration")
 public class RegistrationController {
 
@@ -26,28 +27,60 @@ public class RegistrationController {
             @Valid @RequestBody RegistrationRequest registrationRequest, UriComponentsBuilder uriComponentsBuilder) {
         Long id = registrationService.createNewRegistration(registrationRequest);
 
+        System.out.println("id...." + id.toString());
+
+
         UriComponents uriComponents = uriComponentsBuilder.path("api/registration/{id}").buildAndExpand(id);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uriComponents.toUri());
 
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        ResponseEntity<Void> response = new ResponseEntity<>(headers, HttpStatus.CREATED);
+
+        System.out.println("Create new responseEntity....");
+        System.out.println(response);
+
+        return response;
     }
 
     @GetMapping
     public ResponseEntity<List<Registration>> getAllRegistrations() {
-        return ResponseEntity.ok(registrationService.getAllRegistrations());
+        ResponseEntity<List<Registration>> response = ResponseEntity.ok(registrationService.getAllRegistrations());
+
+        System.out.println("get All responseEntity....");
+        System.out.println(response);
+
+//        return = ResponseEntity.ok(registrationService.getAllRegistrations());
+        return response;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Registration> getRegistrationById(
             @PathVariable("id") Long id) {
-        return ResponseEntity.ok(registrationService.getRegistrationById(id));
+
+        ResponseEntity<Registration> response =  ResponseEntity.ok(registrationService.getRegistrationById(id));
+
+        System.out.println("get by Id responseEntity....");
+        System.out.println(response);
+
+//        return ResponseEntity.ok(registrationService.getRegistrationById(id));
+
+        return response;
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Long> updateRegistration(
         @PathVariable("id") Long id, @Valid @RequestBody RegistrationRequest registrationRequest) {
-        return ResponseEntity.ok(registrationService.updateRegistration(id, registrationRequest));
+
+        ResponseEntity<Long> response = ResponseEntity.ok(registrationService.updateRegistration(id, registrationRequest));
+
+        System.out.println("update by Id responseEntity....");
+        System.out.println(response);
+
+
+//        return ResponseEntity.ok(registrationService.updateRegistration(id, registrationRequest));
+
+        return response;
+
     }
     //    public ResponseEntity<Long> updateRegistration(
 
@@ -56,6 +89,14 @@ public class RegistrationController {
     public ResponseEntity<Void> deleteRegistration(
             @PathVariable("id") Long id) {
         registrationService.deleteRegistrationById(id);
-        return ResponseEntity.ok().build();
+
+        ResponseEntity<Void> response =  ResponseEntity.ok().build();
+
+        System.out.println("delete by Id responseEntity....");
+        System.out.println(response);
+
+//        return ResponseEntity.ok().build();
+
+        return response;
     }
 }
