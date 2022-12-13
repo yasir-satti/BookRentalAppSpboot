@@ -6,7 +6,7 @@ phases:
       - echo Entered the build phase...
       - echo Build started on `date`
       - mvn package spring-boot:repackage
-      - ls -la
+      - ls -la target
 #      - mv target/BookRentalAppSpboot-0.0.1-SNAPSHOT .
   post_build:
     commands:
