@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 //@CrossOrigin(origins = "http://localhost:3000")
-@CrossOrigin(origins = "https://d2s5kr8fysj3pd.cloudfront.net")
+@CrossOrigin(origins = "http://d2s5kr8fysj3pd.cloudfront.net")
 @RequestMapping("api/registration")
 public class RegistrationController {
 
