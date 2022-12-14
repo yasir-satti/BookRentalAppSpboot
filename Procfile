@@ -1,1 +1,1 @@
-web: java -jar target/BookRentalAppSpboot-0.0.1-SNAPSHOT.jar
+web: java -jar BookRentalAppSpboot-0.0.1-SNAPSHOT.jar
