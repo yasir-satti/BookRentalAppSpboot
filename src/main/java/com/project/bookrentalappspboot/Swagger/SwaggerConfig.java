@@ -46,7 +46,7 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .apis(RequestHandlerSelectors.basePackage(basePackage))
                 .build()
-                .apiInfo(metaData())
+                .apiInfo(metaData());
 //                .securitySchemes(Arrays.asList(securityScheme()))
 //                .securityContexts(Arrays.asList(securityContext()));
     }
