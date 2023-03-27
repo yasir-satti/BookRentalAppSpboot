@@ -82,7 +82,7 @@ public class RegistrationControllerTest {
     }
 
     @Test
-    public void allRegistrationsShouldReturnOneRegistration() throws Exception {
+    public void allRegistrationsShouldReturnOneRecord() throws Exception {
 
         Registration registration = new Registration(
                 "Yasir",
@@ -106,6 +106,48 @@ public class RegistrationControllerTest {
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].firstName", is("Yasir")));
+    }
+
+    @Test
+    public void allRegistrationsShouldReturnTwoRecords() throws Exception {
+
+        Registration recordOne = new Registration(
+                "Yasir",
+                "Kamal Mohamed Hamad",
+                "Satti",
+                "yassir_satti@hotmail.com",
+                "7 Upland Drive",
+                "Little Hulton",
+                "Manchester",
+                "M38 9UD",
+                "230e9i@");
+
+        Registration recordTwo = new Registration(
+                "John",
+                "",
+                "James",
+                "james@hotmail.com",
+                "70 Upland Drive",
+                "Little Hulton",
+                "Manchester",
+                "M38 9UD",
+                "xmowe/23");
+
+        List<Registration> reg = new ArrayList<>();
+        reg.add(recordOne);
+        reg.add(recordTwo);
+
+        when(registrationService.getAllRegistrations())
+                .thenReturn(reg);
+
+        this.mockMvc
+                .perform(get("/api/registration"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].firstName", is("Yasir")))
+                .andExpect(jsonPath("$[1].firstName", is("John")));
+
     }
 
     @Test
