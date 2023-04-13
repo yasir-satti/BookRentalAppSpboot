@@ -17,20 +17,17 @@ import java.util.List;
 @RequestMapping("api/registration")
 public class RegistrationController {
 
-    RegistrationService registrationService;
+    RegistrationServiceInterface registrationServiceInterface;
 
-    public RegistrationController(RegistrationService registrationService) {
-        this.registrationService = registrationService;
+    public RegistrationController(RegistrationServiceInterface registrationServiceInterface) {
+        this.registrationServiceInterface = registrationServiceInterface;
     }
 
     @ApiOperation(value="Create new user registration", notes = "This endpoint creates a new user registration record in the application database")
     @PostMapping
     public ResponseEntity<Void> createNewRegistration(
             @Valid @RequestBody RegistrationRequest registrationRequest, UriComponentsBuilder uriComponentsBuilder) {
-        Long id = registrationService.createNewRegistration(registrationRequest);
-
-        System.out.println("id...." + id.toString());
-
+        Long id = registrationServiceInterface.createNewRegistration(registrationRequest);
 
         UriComponents uriComponents = uriComponentsBuilder.path("api/registration/{id}").buildAndExpand(id);
         HttpHeaders headers = new HttpHeaders();
@@ -38,21 +35,13 @@ public class RegistrationController {
 
         ResponseEntity<Void> response = new ResponseEntity<>(headers, HttpStatus.CREATED);
 
-        System.out.println("Create new responseEntity....");
-        System.out.println(response);
-
         return response;
     }
 
     @ApiOperation(value="Get all usres registration records", notes = "This endpoint gets all users registration records in the application database")
     @GetMapping
     public ResponseEntity<List<Registration>> getAllRegistrations() {
-        ResponseEntity<List<Registration>> response = ResponseEntity.ok(registrationService.getAllRegistrations());
-
-        System.out.println("get All responseEntity....");
-        System.out.println(response);
-
-//        return = ResponseEntity.ok(registrationService.getAllRegistrations());
+        ResponseEntity<List<Registration>> response = ResponseEntity.ok(registrationServiceInterface.getAllRegistrations());
         return response;
     }
 
@@ -61,12 +50,7 @@ public class RegistrationController {
     public ResponseEntity<Registration> getRegistrationById(
             @PathVariable("id") Long id) {
 
-        ResponseEntity<Registration> response =  ResponseEntity.ok(registrationService.getRegistrationById(id));
-
-        System.out.println("get by Id responseEntity....");
-        System.out.println(response);
-
-//        return ResponseEntity.ok(registrationService.getRegistrationById(id));
+        ResponseEntity<Registration> response =  ResponseEntity.ok(registrationServiceInterface.getRegistrationById(id));
 
         return response;
     }
@@ -76,13 +60,7 @@ public class RegistrationController {
     public ResponseEntity<Long> updateRegistration(
         @PathVariable("id") Long id, @Valid @RequestBody RegistrationRequest registrationRequest) {
 
-        ResponseEntity<Long> response = ResponseEntity.ok(registrationService.updateRegistration(id, registrationRequest));
-
-        System.out.println("update by Id responseEntity....");
-        System.out.println(response);
-
-
-//        return ResponseEntity.ok(registrationService.updateRegistration(id, registrationRequest));
+        ResponseEntity<Long> response = ResponseEntity.ok(registrationServiceInterface.updateRegistration(id, registrationRequest));
 
         return response;
 
@@ -94,14 +72,9 @@ public class RegistrationController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRegistration(
             @PathVariable("id") Long id) {
-        registrationService.deleteRegistrationById(id);
+        registrationServiceInterface.deleteRegistrationById(id);
 
         ResponseEntity<Void> response =  ResponseEntity.ok().build();
-
-        System.out.println("delete by Id responseEntity....");
-        System.out.println(response);
-
-//        return ResponseEntity.ok().build();
 
         return response;
     }

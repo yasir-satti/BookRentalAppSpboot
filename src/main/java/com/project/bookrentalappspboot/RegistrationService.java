@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class RegistrationService {
+public class RegistrationService implements RegistrationServiceInterface {
 
     RegistrationMapper registrationMapper;
 
@@ -15,6 +15,7 @@ public class RegistrationService {
         this.registrationMapper = registrationMapper;
     }
 
+    @Override
     public long createNewRegistration(RegistrationRequest registrationRequest) {
 
         Registration registration = new Registration(registrationRequest.getFirstName(),
@@ -30,11 +31,13 @@ public class RegistrationService {
         return registrationMapper.insert(registration);
     }
 
+    @Override
     public List<Registration> getAllRegistrations() {
 
         return registrationMapper.findAll();
     }
 
+    @Override
     public Registration getRegistrationById(Long id) {
 
         Optional<Registration> requestedRegistration = Optional.ofNullable(registrationMapper.findById(id));
@@ -46,6 +49,7 @@ public class RegistrationService {
         return requestedRegistration.get();
     }
 
+    @Override
     public Long updateRegistration(Long id, RegistrationRequest registrationToUpdateRequest) {
 
         Optional<Registration> registrationFromDatabase = Optional.ofNullable(registrationMapper.findById(id));
@@ -70,6 +74,7 @@ public class RegistrationService {
         return registrationMapper.update(registrationToUpdate);
     }
 
+    @Override
     public void deleteRegistrationById(Long id) {
 
         registrationMapper.deleteById(id);

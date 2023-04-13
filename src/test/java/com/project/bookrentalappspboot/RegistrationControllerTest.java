@@ -36,7 +36,7 @@ public class RegistrationControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private RegistrationService registrationService;
+    private RegistrationServiceInterface registrationServiceInterface;
 
     @Captor
     private ArgumentCaptor<RegistrationRequest> argumentCaptor;
@@ -56,7 +56,7 @@ public class RegistrationControllerTest {
         registrationRequest.setPostcode("M38 9UD");
         registrationRequest.setPassword("230e9i@");
 
-        when(registrationService.createNewRegistration(argumentCaptor.capture()))
+        when(registrationServiceInterface.createNewRegistration(argumentCaptor.capture()))
                 .thenReturn(1L);
 
         this.mockMvc
@@ -97,7 +97,7 @@ public class RegistrationControllerTest {
 
         List<Registration> reg = new ArrayList<>();
         reg.add(registration);
-        when(registrationService.getAllRegistrations())
+        when(registrationServiceInterface.getAllRegistrations())
                 .thenReturn(reg);
 
         this.mockMvc
@@ -137,7 +137,7 @@ public class RegistrationControllerTest {
         reg.add(recordOne);
         reg.add(recordTwo);
 
-        when(registrationService.getAllRegistrations())
+        when(registrationServiceInterface.getAllRegistrations())
                 .thenReturn(reg);
 
         this.mockMvc
@@ -153,7 +153,7 @@ public class RegistrationControllerTest {
     @Test
     public void getRegistrationWithUnkKnownIdShouldReturn404Error() throws Exception {
 
-        when(registrationService.getRegistrationById(24L))
+        when(registrationServiceInterface.getRegistrationById(24L))
                 .thenThrow(new RegistrationNotFoundException("Registration with id '24' not found"));
 
         this.mockMvc
@@ -176,7 +176,7 @@ public class RegistrationControllerTest {
         registrationRequest.setPostcode("M38 9UD");
         registrationRequest.setPassword("230e9i@");
 
-        when(registrationService.updateRegistration(eq(1L), argumentCaptor.capture()))
+        when(registrationServiceInterface.updateRegistration(eq(1L), argumentCaptor.capture()))
                 .thenReturn((createRegistration(
                         1L,
                         "Rittal",

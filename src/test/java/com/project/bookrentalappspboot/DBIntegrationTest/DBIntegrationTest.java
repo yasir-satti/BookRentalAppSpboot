@@ -1,5 +1,8 @@
-package com.project.bookrentalappspboot;
+package com.project.bookrentalappspboot.DBIntegrationTest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.bookrentalappspboot.Registration;
+import com.project.bookrentalappspboot.RegistrationRequest;
 import jakarta.inject.Inject;
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,26 +13,45 @@ import org.mockito.InjectMocks;
 import org.mybatis.spring.boot.test.autoconfigure.AutoConfigureMybatis;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
-@MybatisTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockMvc
 public class DBIntegrationTest {
 
-//    @Inject
-    @Autowired
-    private RegistrationMapper registrationMapper;
 
-//    private RegistrationService registrationService;
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @BeforeEach
-    public void insertRecord() {
+    void setup() {
+        userRepository.deleteAll();
+    }
+
+    @Test
+    public void dbConnectionEstablishedTest() {
+
+        List<Registration> response = userRepository.findAll();
+        assertThat(response).isNotNull();
+    }
+
+    @Test
+    public void shouldCreateNewUserRegistrationRecord() {
         RegistrationRequest registrationRequest = new RegistrationRequest();
         registrationRequest.setFirstName("Yasir");
         registrationRequest.setMiddleNames("Kamal Mohamed Hamad");
@@ -43,12 +65,5 @@ public class DBIntegrationTest {
         registrationRequest.setPassword("230e9i@");
 
 //        registrationService.createNewRegistration(registrationRequest);
-    }
-
-    @Test
-    public void dbConnectionEstablishedTest() {
-
-        List<Registration> registration = registrationMapper.findAll();
-        assertThat(registration).isNotNull();
     }
 }
