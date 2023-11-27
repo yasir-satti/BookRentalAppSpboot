@@ -9,27 +9,27 @@ import java.util.List;
 
 @Mapper
 public interface RegistrationMapper {
-    @Select("SELECT * FROM registration")
+    @Select("SELECT * FROM customers")
     List<Registration> findAll();
 
-    @Select("SELECT * FROM registration WHERE id = #{id}")
+    @Select("SELECT * FROM customers WHERE id = #{id}")
     Registration findById(long id);
 
-    @Insert("INSERT INTO registration(firstName, middleNames, surName, email, " +
+    @Insert("INSERT INTO customers(firstName, middleNames, surName, email, " +
             " address1, address2, cityTown, postcode, password) " +
             " VALUES (#{firstName}, #{middleNames}, #{surName}, " +
                     " #{email}, #{address1}, #{address2}, #{cityTown}, " +
                     " #{postcode}, #{password})")
     long insert(Registration registration);
 
-    @Select("UPDATE registration SET firstName=#{firstName}, " +
+    @Select("UPDATE customers SET firstName=#{firstName}, " +
     " middleNames=#{middleNames}, surName=#{surName}, email=#{email}, " +
             "address1=#{address1}, address2=#{address2}, cityTown=#{cityTown}, " +
             "postcode=#{postcode}, password=#{password}" +
     " WHERE id=#{id}")
     Long update(Registration registration);
 
-    @Delete("DELETE FROM registration WHERE id=#{id}")
+    @Delete("DELETE FROM customers WHERE id=#{id}")
     long deleteById(long id);
 
 }
