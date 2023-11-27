@@ -43,8 +43,11 @@ c) E2E testing with testCafe, selenium and Cypress
 
 ## **Back end app**
 
-1. REST API endpoints for CRUD operations
-2. MyBatis framework for database operations
+REST API endpoints for CRUD operations
+
+## **MySQL db with Docker**
+
+MySQL database built with [docker container](https://www.bezkoder.com/docker-compose-spring-boot-mysql/
 
 ## **CI pipeline with husky and github actions**
 
