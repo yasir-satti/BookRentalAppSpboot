@@ -11,8 +11,8 @@ USE `bookRental`;
 
 \! echo "create DB bookRental user and privilege...";
 DROP USER if exists booksuser;
-CREATE USER bookRental IDENTIFIED BY 'password';
-ALTER USER bookRental REQUIRE SSL;
+CREATE USER booksuser IDENTIFIED BY 'password';
+ALTER USER booksuser REQUIRE SSL;
 
 GRANT ALL PRIVILEGES ON `bookRental`.* TO 'booksuser'@'%'  WITH GRANT OPTION;
 FLUSH PRIVILEGES;

@@ -6,6 +6,8 @@ target/
 Tests/
 lib/
 
+.DS_Store
+
 .env
 
 ### STS ###
