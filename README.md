@@ -6,21 +6,37 @@ This is a book rental service app ( see below for all features of the app ).
 
 The app is made of
 
-a) The front-end is at https://github.com/yasir-satti/book-rental-app-react
+a) The front-end  React App is at https://github.com/yasir-satti/book-rental-app-react
 
-b) This back-end repo
-
-c) mySQL db
+b) This back-end API + MySQL DB App
 
 ## **Run the full app**
 
 a) clone both repos
 
-b) create mySQL db
+b) Run back-end app:
 
-c) run back-end ( listening on port 8080 )
+    - Docker container:
+```agsl
+$ cd docker
+$ docker-compose up
+```
 
-d) run front-end ( listening on port 3000 )
+This exposes:
+- MySQL DB  on port 3306 ( http://localhost:3306 )
+- MySQL DB Admin UI on port 8080 ( http://localhost:8080 )
+
+
+    - API app:
+    
+    Run Java App 
+```BookRentalAppSpbootApplication```
+
+This exposes APIs on port 5000 ( http://localhost:5000 )
+
+
+
+d) run front-end on port 3000 ( http://localhost:3000 )
 
 e) Enter and submit customer registration details
 
