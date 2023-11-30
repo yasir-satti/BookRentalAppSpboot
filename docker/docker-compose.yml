@@ -1,0 +1,27 @@
+
+version: '3.7'
+
+services:
+  #service 1: definition of mysql database
+  db:
+    image: mysql:latest
+    container_name: "mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD = ${DB_PASSWORD}
+    ports:
+      - ${DB_LOCALHOST_PORT}:${DB_DOCKER_PORT}
+    restart: always
+    volumes:
+      - ./tmp/mysql-data/:/var/lib/mysql
+      - ./volumes/mysql:/docker-entrypoint-initdb.d
+  #service 2: definition of mysql database admin client
+  adminer:
+    image: adminer:latest
+    restart: always
+    ports:
+      - ${API_LOCALHOST_PORT}:${API_DOCKER_PORT}
+    depends_on:
+      - db
+    container_name: "mysql-adminer"

@@ -32,7 +32,7 @@ define versions for your project's dependencies.-->
         <jakarta.validation-api.version>2.0.2</jakarta.validation-api.version>
         <java.version>11</java.version>
         <junit.version>4.13.2</junit.version>
-        <spring-context.version>5.3.12</spring-context.version>
+        <spring-context.version>5.3.19</spring-context.version>
         <mybatis.version>3.5.7</mybatis.version>
         <mybatis-spring.version>2.0.6</mybatis-spring.version>
         <mysql-connector-java.version>8.0.26</mysql-connector-java.version>
@@ -71,6 +71,7 @@ management feature in Maven ensures automatic download of those libraries from a
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -141,6 +142,36 @@ management feature in Maven ensures automatic download of those libraries from a
             <groupId>io.swagger</groupId>
             <artifactId>swagger-models</artifactId>
             <version>1.5.20</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>5.3.20</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>3.0.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.0-beta3</version>
         </dependency>
     </dependencies>
 <!--    build section is also a very important section of the Maven POM.
