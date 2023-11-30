@@ -1,36 +1,65 @@
-package com.project.bookrentalappspboot.DbIntegrationTest;
+package com.project.bookrentalappspboot.DBIntegrationTest;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.HttpClientBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.bookrentalappspboot.Registration;
+import com.project.bookrentalappspboot.RegistrationController;
+import com.project.bookrentalappspboot.RegistrationRequest;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mybatis.spring.boot.test.autoconfigure.AutoConfigureMybatis;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import java.util.List;
 
-@SpringBootTest
+import static org.assertj.core.api.Assertions.assertThat;
+
 @ExtendWith(SpringExtension.class)
-@AutoConfigureMybatis
-public class DbIntegrationTest {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@WebMvcTest(RegistrationController.class)
+@AutoConfigureMockMvc
+public class DBIntegrationTest {
+
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @BeforeEach
+    void setup() {
+        userRepository.deleteAll();
+    }
 
     @Test
-    public void testHttpResponse() throws Exception {
+    public void dbConnectionEstablishedTest() {
 
-        String url = "http://localhost:5000/api/registration";
+        List<Registration> response = userRepository.findAll();
+        assertThat(response).isNotNull();
+    }
 
-        HttpUriRequest request = new HttpGet( url );
-        HttpResponse httpResponse = HttpClientBuilder
-                                        .create()
-                                        .build()
-                                        .execute( request );
-        assertThat(
-                httpResponse.getStatusLine().getStatusCode(),
-                equalTo(HttpStatus.SC_OK));
-    };
-};
+    @Test
+    public void shouldCreateNewUserRegistrationRecord() {
+        RegistrationRequest registrationRequest = new RegistrationRequest();
+        registrationRequest.setFirstName("Yasir");
+        registrationRequest.setMiddleNames("Kamal Mohamed Hamad");
+        registrationRequest.setSurName("Satti");
+//        registrationRequest.setDateOfBirth(06/04/1972);
+        registrationRequest.setEmail("zxc@hotmail.com");
+        registrationRequest.setAddress1("7 Upland Drive");
+        registrationRequest.setAddress2("Little Hulton");
+        registrationRequest.setCityTown("Manchester");
+        registrationRequest.setPostcode("M38 9UD");
+        registrationRequest.setPassword("230e9i@");
+
+//        registrationService.createNewRegistration(registrationRequest);
+    }
+}
