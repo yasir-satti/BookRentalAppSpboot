@@ -169,9 +169,9 @@ management feature in Maven ensures automatic download of those libraries from a
             <version>4.3.6</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-            <version>4.0-beta3</version>
+            <groupId>org.apache.httpcomponents.core5</groupId>
+            <artifactId>httpcore5</artifactId>
+            <version>5.2.4</version>
         </dependency>
     </dependencies>
 <!--    build section is also a very important section of the Maven POM.
