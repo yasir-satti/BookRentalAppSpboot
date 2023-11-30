@@ -39,8 +39,6 @@ public class DBIntegrationTest {
         userRepository.deleteAll();
     }
 
-
-
     @Test
     public void dbConnectionEstablishedTest() {
 
