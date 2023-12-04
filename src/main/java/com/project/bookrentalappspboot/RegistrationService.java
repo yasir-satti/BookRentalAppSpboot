@@ -15,18 +15,18 @@ public class RegistrationService {
         this.registrationMapper = registrationMapper;
     }
 
-    public long createNewRegistration(RegistrationRequest registrationRequest) {
+    public long createNewRegistration(Registration registration) {
 
-        Registration registration = new Registration(registrationRequest.getFirstName(),
-                registrationRequest.getMiddleNames(),
-                registrationRequest.getSurName(),
-                registrationRequest.getEmail(),
-                registrationRequest.getAddress1(),
-                registrationRequest.getAddress2(),
-                registrationRequest.getCityTown(),
-                registrationRequest.getPostcode(),
-                registrationRequest.getPassword()
-        );
+//        Registration registration = new Registration(registration.getFirstName(),
+//                registration.getMiddleNames(),
+//                registration.getSurName(),
+//                registration.getEmail(),
+//                registration.getAddress1(),
+//                registration.getAddress2(),
+//                registration.getCityTown(),
+//                registration.getPostcode(),
+//                registration.getPassword()
+//        );
         return registrationMapper.insert(registration);
     }
 
@@ -46,7 +46,7 @@ public class RegistrationService {
         return requestedRegistration.get();
     }
 
-    public Long updateRegistration(Long id, RegistrationRequest registrationToUpdateRequest) {
+    public Long updateRegistration(Long id, Registration registrationToUpdate) {
 
         Optional<Registration> registrationFromDatabase = Optional.ofNullable(registrationMapper.findById(id));
 
@@ -54,17 +54,17 @@ public class RegistrationService {
             throw new RegistrationNotFoundException(String.format("Registration with id: '%s' not found", id));
         }
 
-        Registration registrationToUpdate = registrationFromDatabase.get();
-
-        registrationToUpdate.setFirstName(registrationToUpdateRequest.getFirstName());
-        registrationToUpdate.setMiddleNames(registrationToUpdateRequest.getMiddleNames());
-        registrationToUpdate.setSurName(registrationToUpdateRequest.getSurName());
-        registrationToUpdate.setEmail(registrationToUpdateRequest.getEmail());
-        registrationToUpdate.setAddress1(registrationToUpdateRequest.getAddress1());
-        registrationToUpdate.setAddress2(registrationToUpdateRequest.getAddress2());
-        registrationToUpdate.setCityTown(registrationToUpdateRequest.getCityTown());
-        registrationToUpdate.setPostcode(registrationToUpdateRequest.getPostcode());
-        registrationToUpdate.setPassword(registrationToUpdateRequest.getPassword());
+//        Registration registrationToUpdate = registrationFromDatabase.get();
+//
+//        registrationToUpdate.setFirstName(registrationToUpdate.getFirstName());
+//        registrationToUpdate.setMiddleNames(registrationToUpdate.getMiddleNames());
+//        registrationToUpdate.setSurName(registrationToUpdate.getSurName());
+//        registrationToUpdate.setEmail(registrationToUpdate.getEmail());
+//        registrationToUpdate.setAddress1(registrationToUpdate.getAddress1());
+//        registrationToUpdate.setAddress2(registrationToUpdate.getAddress2());
+//        registrationToUpdate.setCityTown(registrationToUpdate.getCityTown());
+//        registrationToUpdate.setPostcode(registrationToUpdate.getPostcode());
+//        registrationToUpdate.setPassword(registrationToUpdate.getPassword());
 
 //        return registrationRepository.save(registrationToUpdate);
         return registrationMapper.update(registrationToUpdate);

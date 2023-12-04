@@ -26,7 +26,7 @@ public class RegistrationController {
     @ApiOperation(value="Create new user registration", notes = "This endpoint creates a new user registration record in the application database")
     @PostMapping
     public ResponseEntity<Void> createNewRegistration(
-            @Valid @RequestBody RegistrationRequest registrationRequest, UriComponentsBuilder uriComponentsBuilder) {
+            @Valid @RequestBody Registration registrationRequest, UriComponentsBuilder uriComponentsBuilder) {
         Long id = registrationService.createNewRegistration(registrationRequest);
 
         System.out.println("id...." + id.toString());
@@ -74,9 +74,9 @@ public class RegistrationController {
     @ApiOperation(value="Update registration record for a specific user", notes = "This endpoint updates a user registration record for a specified user in the application database")
     @PutMapping("/{id}")
     public ResponseEntity<Long> updateRegistration(
-        @PathVariable("id") Long id, @Valid @RequestBody RegistrationRequest registrationRequest) {
+        @PathVariable("id") Long id, @Valid @RequestBody Registration registration) {
 
-        ResponseEntity<Long> response = ResponseEntity.ok(registrationService.updateRegistration(id, registrationRequest));
+        ResponseEntity<Long> response = ResponseEntity.ok(registrationService.updateRegistration(id, registration));
 
         System.out.println("update by Id responseEntity....");
         System.out.println(response);

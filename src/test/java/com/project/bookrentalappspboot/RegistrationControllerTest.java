@@ -5,10 +5,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+
 import org.mybatis.spring.boot.test.autoconfigure.AutoConfigureMybatis;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -39,30 +43,30 @@ public class RegistrationControllerTest {
     private RegistrationService registrationService;
 
     @Captor
-    private ArgumentCaptor<RegistrationRequest> argumentCaptor;
+    private ArgumentCaptor<Registration> argumentCaptor;
 
     @Test
     public void postingANewMemberRegistrationShouldCreateANewMemberEntryInDatabase() throws Exception {
 
-        RegistrationRequest registrationRequest = new RegistrationRequest();
-        registrationRequest.setFirstName("Yasir");
-        registrationRequest.setMiddleNames("Kamal Mohamed Hamad");
-        registrationRequest.setSurName("Satti");
-//        registrationRequest.setDateOfBirth(06/04/1972);
-        registrationRequest.setEmail("yassir_satti@hotmail.com");
-        registrationRequest.setAddress1("7 Upland Drive");
-        registrationRequest.setAddress2("Little Hulton");
-        registrationRequest.setCityTown("Manchester");
-        registrationRequest.setPostcode("M38 9UD");
-        registrationRequest.setPassword("230e9i@");
+        Registration registration = new Registration();
+        registration.setFirstName("Yasir");
+        registration.setMiddleNames("Kamal Mohamed Hamad");
+        registration.setSurName("Satti");
+//        registration.setDateOfBirth(06/04/1972);
+        registration.setEmail("yassir_satti@hotmail.com");
+        registration.setAddress1("7 Upland Drive");
+        registration.setAddress2("Little Hulton");
+        registration.setCityTown("Manchester");
+        registration.setPostcode("M38 9UD");
+        registration.setPassword("230e9i@");
 
         when(registrationService.createNewRegistration(argumentCaptor.capture()))
                 .thenReturn(1L);
 
         this.mockMvc
-                .perform(post("http://localhost/api/registration/")
+                .perform(post("http://localhost:5000/api/registration/")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(registrationRequest))
+                        .content(objectMapper.writeValueAsString(registration))
                 )
                 .andExpect(status().isCreated())
                 .andExpect(header().exists("Location"))
@@ -122,17 +126,17 @@ public class RegistrationControllerTest {
     @Test
     public void updateRegistrationWithKnownIdShouldUpdateTheRegistration() throws Exception {
 
-        RegistrationRequest registrationRequest = new RegistrationRequest();
-        registrationRequest.setFirstName("Rittal");
-        registrationRequest.setMiddleNames("Kamal Mohamed Hamad");
-        registrationRequest.setSurName("Satti");
+        Registration registration = new Registration();
+        registration.setFirstName("Rittal");
+        registration.setMiddleNames("Kamal Mohamed Hamad");
+        registration.setSurName("Satti");
 //        registrationRequest.setDateOfBirth(06/04/1972);
-        registrationRequest.setEmail("rittalsatti@hotmail.com");
-        registrationRequest.setAddress1("7 Upland Drive");
-        registrationRequest.setAddress2("Little Hulton");
-        registrationRequest.setCityTown("Manchester");
-        registrationRequest.setPostcode("M38 9UD");
-        registrationRequest.setPassword("230e9i@");
+        registration.setEmail("rittalsatti@hotmail.com");
+        registration.setAddress1("7 Upland Drive");
+        registration.setAddress2("Little Hulton");
+        registration.setCityTown("Manchester");
+        registration.setPostcode("M38 9UD");
+        registration.setPassword("230e9i@");
 
         when(registrationService.updateRegistration(eq(1L), argumentCaptor.capture()))
                 .thenReturn((createRegistration(
@@ -151,7 +155,7 @@ public class RegistrationControllerTest {
         this.mockMvc
                 .perform(put("http://localhost:8080/api/registration/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(registrationRequest))
+                        .content(objectMapper.writeValueAsString(registration))
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))

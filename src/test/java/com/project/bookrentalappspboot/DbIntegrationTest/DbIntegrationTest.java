@@ -1,65 +1,51 @@
 package com.project.bookrentalappspboot.DbIntegrationTest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.bookrentalappspboot.Registration;
-import com.project.bookrentalappspboot.RegistrationController;
-import com.project.bookrentalappspboot.RegistrationRequest;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Collections;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
+@DataJpaTest
 public class DbIntegrationTest {
 
+    @Autowired
+    private MySQLRepository mysqlRepository;
 
     @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @BeforeEach
-    void setup() {
-        userRepository.deleteAll();
-    }
+    private TestEntityManager testEntityManager;
 
     @Test
-    public void dbConnectionEstablishedTest() {
+    public void testGetCustomerByName_ReturnsCustomerDetails() {
+        Registration savedCustomer = testEntityManager.persistAndFlush(new Registration());
+        savedCustomer.setFirstName("Yasir");
+        List<Registration> customer = mysqlRepository.findAll();
+        then(customer).isNotNull();
+    };
 
-        List<Registration> response = userRepository.findAll();
-        assertThat(response).isNotNull();
-    }
+    @Test
+    public void testGetCustomerByPostcode_ReturnsCustomerDetails() {
+        Registration Yasir = Registration
+                .builder()
+                    .firstName("Yasir")
+                    .surName("Satti")
+                    .email("c@c.com")
+                    .address1("1 X")
+                    .cityTown("Manchester")
+                    .postcode("M1 3ER")
+                    .password("wecwW@£EDxe")
+                .build();
 
-//    @Test
-//    public void shouldCreateNewUserRegistrationRecord() {
-//        RegistrationRequest registrationRequest = new RegistrationRequest();
-//        registrationRequest.setFirstName("Yasir");
-//        registrationRequest.setMiddleNames("Kamal Mohamed Hamad");
-//        registrationRequest.setSurName("Satti");
-////        registrationRequest.setDateOfBirth(06/04/1972);
-//        registrationRequest.setEmail("zxc@hotmail.com");
-//        registrationRequest.setAddress1("7 Upland Drive");
-//        registrationRequest.setAddress2("Little Hulton");
-//        registrationRequest.setCityTown("Manchester");
-//        registrationRequest.setPostcode("M38 9UD");
-//        registrationRequest.setPassword("230e9i@");
-//
-//        RegistrationController registrationService = null;
-//
-//        registrationService.createNewRegistration(registrationRequest);
-//    };
-}
+        Collections.singletonList(Yasir).forEach(testEntityManager::persistAndFlush);
+        long numOfCustomers = mysqlRepository.findAll().size();
+        then(numOfCustomers).isZero();
+    };
+};
