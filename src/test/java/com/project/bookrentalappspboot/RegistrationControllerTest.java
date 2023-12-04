@@ -64,13 +64,13 @@ public class RegistrationControllerTest {
                 .thenReturn(1L);
 
         this.mockMvc
-                .perform(post("http://localhost:5000/api/registration/")
+                .perform(post("http://localhost:5000/api/registration")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(registration))
                 )
                 .andExpect(status().isCreated())
                 .andExpect(header().exists("Location"))
-                .andExpect(header().string("Location", "http://localhost/api/registration/1"));
+                .andExpect(header().string("Location", "http://localhost:5000/api/registration/1"));
 
         assertThat(argumentCaptor.getValue().getFirstName(), is("Yasir"));
         assertThat(argumentCaptor.getValue().getMiddleNames(), is("Kamal Mohamed Hamad"));
