@@ -1,5 +1,7 @@
-package com.project.bookrentalappspboot;
+package com.project.bookrentalappspboot.Controller;
 
+import com.project.bookrentalappspboot.Entity.Registration;
+import com.project.bookrentalappspboot.Service.RegistrationService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,8 +28,8 @@ public class RegistrationController {
     @ApiOperation(value="Create new user registration", notes = "This endpoint creates a new user registration record in the application database")
     @PostMapping
     public ResponseEntity<Void> createNewRegistration(
-            @Valid @RequestBody RegistrationRequest registrationRequest, UriComponentsBuilder uriComponentsBuilder) {
-        Long id = registrationService.createNewRegistration(registrationRequest);
+            @Valid @RequestBody Registration registration, UriComponentsBuilder uriComponentsBuilder) {
+        Long id = registrationService.createNewRegistration(registration);
 
         System.out.println("id...." + id.toString());
 
@@ -52,7 +54,6 @@ public class RegistrationController {
         System.out.println("get All responseEntity....");
         System.out.println(response);
 
-//        return = ResponseEntity.ok(registrationService.getAllRegistrations());
         return response;
     }
 
@@ -66,29 +67,22 @@ public class RegistrationController {
         System.out.println("get by Id responseEntity....");
         System.out.println(response);
 
-//        return ResponseEntity.ok(registrationService.getRegistrationById(id));
-
         return response;
     }
 
     @ApiOperation(value="Update registration record for a specific user", notes = "This endpoint updates a user registration record for a specified user in the application database")
     @PutMapping("/{id}")
     public ResponseEntity<Long> updateRegistration(
-        @PathVariable("id") Long id, @Valid @RequestBody RegistrationRequest registrationRequest) {
+        @PathVariable("id") Long id, @Valid @RequestBody Registration registration) {
 
-        ResponseEntity<Long> response = ResponseEntity.ok(registrationService.updateRegistration(id, registrationRequest));
+        ResponseEntity<Long> response = ResponseEntity.ok(registrationService.updateRegistration(id, registration));
 
         System.out.println("update by Id responseEntity....");
         System.out.println(response);
 
-
-//        return ResponseEntity.ok(registrationService.updateRegistration(id, registrationRequest));
-
         return response;
 
-    }
-    //    public ResponseEntity<Long> updateRegistration(
-
+    };
 
     @ApiOperation(value="Delete registration record for a specific user", notes = "This endpoint deletes a user registration record for a specified user from the application database")
     @DeleteMapping("/{id}")
@@ -100,8 +94,6 @@ public class RegistrationController {
 
         System.out.println("delete by Id responseEntity....");
         System.out.println(response);
-
-//        return ResponseEntity.ok().build();
 
         return response;
     }

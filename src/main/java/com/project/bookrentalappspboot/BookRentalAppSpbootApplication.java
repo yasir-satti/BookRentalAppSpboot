@@ -7,7 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 @SpringBootApplication
 @ContextConfiguration
-@MapperScan
+//@MapperScan
 public class BookRentalAppSpbootApplication {
 
     public static void main(String[] args) {
