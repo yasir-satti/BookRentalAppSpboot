@@ -16,17 +16,6 @@ public class RegistrationService {
     }
 
     public long createNewRegistration(Registration registration) {
-
-//        Registration registration = new Registration(registration.getFirstName(),
-//                registration.getMiddleNames(),
-//                registration.getSurName(),
-//                registration.getEmail(),
-//                registration.getAddress1(),
-//                registration.getAddress2(),
-//                registration.getCityTown(),
-//                registration.getPostcode(),
-//                registration.getPassword()
-//        );
         return registrationMapper.insert(registration);
     }
 
