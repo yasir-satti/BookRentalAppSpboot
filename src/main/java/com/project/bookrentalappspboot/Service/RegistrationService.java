@@ -1,5 +1,9 @@
-package com.project.bookrentalappspboot;
+package com.project.bookrentalappspboot.Service;
 
+import com.project.bookrentalappspboot.Entity.Registration;
+import com.project.bookrentalappspboot.RegistrationNotFoundException;
+import com.project.bookrentalappspboot.Repository.RegistrationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,47 +12,31 @@ import java.util.Optional;
 @Service
 public class RegistrationService {
 
-    RegistrationMapper registrationMapper;
+    @Autowired
+    RegistrationRepository registrationRepository;
 
-    public RegistrationService(RegistrationMapper registrationMapper) {
+    public long createNewRegistration(Registration registration) {
+        return registrationRepository.save(registration).getId();
 
-        this.registrationMapper = registrationMapper;
-    }
-
-    public long createNewRegistration(RegistrationRequest registrationRequest) {
-
-        Registration registration = new Registration(registrationRequest.getFirstName(),
-                registrationRequest.getMiddleNames(),
-                registrationRequest.getSurName(),
-                registrationRequest.getEmail(),
-                registrationRequest.getAddress1(),
-                registrationRequest.getAddress2(),
-                registrationRequest.getCityTown(),
-                registrationRequest.getPostcode(),
-                registrationRequest.getPassword()
-        );
-        return registrationMapper.insert(registration);
     }
 
     public List<Registration> getAllRegistrations() {
-
-        return registrationMapper.findAll();
+        return registrationRepository.findAll();
     }
 
     public Registration getRegistrationById(Long id) {
 
-        Optional<Registration> requestedRegistration = Optional.ofNullable(registrationMapper.findById(id));
+        Optional<Registration> requestedRegistration = registrationRepository.findById(id);
 
         if(requestedRegistration.isEmpty()) {
             throw new RegistrationNotFoundException(String.format("Registration with id: '%s' not found", id));
         }
-
         return requestedRegistration.get();
     }
 
-    public Long updateRegistration(Long id, RegistrationRequest registrationToUpdateRequest) {
+    public Long updateRegistration(Long id, Registration registrationToUpdateRequest) {
 
-        Optional<Registration> registrationFromDatabase = Optional.ofNullable(registrationMapper.findById(id));
+        Optional<Registration> registrationFromDatabase = registrationRepository.findById(id);
 
         if(registrationFromDatabase.isEmpty()) {
             throw new RegistrationNotFoundException(String.format("Registration with id: '%s' not found", id));
@@ -66,12 +54,10 @@ public class RegistrationService {
         registrationToUpdate.setPostcode(registrationToUpdateRequest.getPostcode());
         registrationToUpdate.setPassword(registrationToUpdateRequest.getPassword());
 
-//        return registrationRepository.save(registrationToUpdate);
-        return registrationMapper.update(registrationToUpdate);
+        return registrationRepository.save(registrationToUpdate).getId();
     }
 
     public void deleteRegistrationById(Long id) {
-
-        registrationMapper.deleteById(id);
+        registrationRepository.deleteById(id);
     }
 }

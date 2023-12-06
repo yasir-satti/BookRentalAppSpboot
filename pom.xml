@@ -173,6 +173,10 @@ management feature in Maven ensures automatic download of those libraries from a
             <artifactId>httpcore5</artifactId>
             <version>5.2.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+        </dependency>
     </dependencies>
 <!--    build section is also a very important section of the Maven POM.
 It provides information about the default Maven goal, the directory for

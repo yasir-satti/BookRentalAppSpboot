@@ -1,36 +1,49 @@
 package com.project.bookrentalappspboot.DbIntegrationTest;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.HttpClientBuilder;
+import com.project.bookrentalappspboot.Entity.Registration;
+import com.project.bookrentalappspboot.Service.RegistrationService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mybatis.spring.boot.test.autoconfigure.AutoConfigureMybatis;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.assertj.core.api.BDDAssertions.then;
 
-@SpringBootTest
 @ExtendWith(SpringExtension.class)
-@AutoConfigureMybatis
 public class DbIntegrationTest {
 
+    private RegistrationService registrationService;
+
     @Test
-    public void testHttpResponse() throws Exception {
+    public void tesInsertNewCustomer_ReturnsCustomerId() {
+        Registration Yasir = Registration
+                .builder()
+                .firstName("Yasir")
+                .surName("Satti")
+                .email("c@c.com")
+                .address1("1 X")
+                .cityTown("Manchester")
+                .postcode("M1 3ER")
+                .password("wecwW@£EDxe")
+                .build();
 
-        String url = "http://localhost:5000/api/registration";
+        long response = registrationService.createNewRegistration(Yasir);
+        then(response).isEqualTo(1L);
+    };
 
-        HttpUriRequest request = new HttpGet( url );
-        HttpResponse httpResponse = HttpClientBuilder
-                                        .create()
-                                        .build()
-                                        .execute( request );
-        assertThat(
-                httpResponse.getStatusLine().getStatusCode(),
-                equalTo(HttpStatus.SC_OK));
+    @Test
+    public void testGetCustomerById_ReturnsCustomerDetails() {
+        Registration Yasir = Registration
+                .builder()
+                .firstName("Yasir")
+                .surName("Satti")
+                .email("c@c.com")
+                .address1("1 X")
+                .cityTown("Manchester")
+                .postcode("M1 3ER")
+                .password("wecwW@£EDxe")
+                .build();
+
+        Registration customer = registrationService.getRegistrationById(1L);
+        then(customer).isEqualTo(Yasir);
     };
 };
